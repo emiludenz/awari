@@ -12,3 +12,4 @@ fsharpc --nologo -r awariLibComplete.dll Awari.fsx
 echo -ne '####################      (100%!)\r'
 echo -ne '\n'
 mono Awari.exe
+

@@ -32,7 +32,7 @@ let printBoard (b:board) =
   List.iter (fun x -> printf "%s" x) [for i in 1..6 -> "____"]
   printfn ""
   List.rev [for i in 1..6 -> i] |> List.iter (fun x -> printf "%3i|" x)
-  printfn ""
+  printfn "P2"
   List.iter (fun x -> printf "%s" x) [for i in 1..6 -> "‾‾‾‾"]
   printfn ""
   // Printing player 1 board side
@@ -61,7 +61,7 @@ let printBoard (b:board) =
   List.iter (fun x -> printf "%s" x) [for i in 1..6 -> "____"]
   printfn ""
   List.iter (fun x -> printf "%3i|" x) [for i in 1..6 -> i]
-  printfn ""
+  printfn "P1"
   List.iter (fun x -> printf "%s" x) [for i in 1..6 -> "‾‾‾‾"]
   printfn ""
 
@@ -118,14 +118,13 @@ let distribute (b: board) (p:player) (i:pit) : board * player * pit =
       hand <- hand-1
   
   // Catching the opposing sides beans if the last bean is placed in 
-  // an empty pit on the players home field. The opposite side will always be 12 minus the pit
+  // an empty pit on the players home field. The opposing side will always be 12 minus the pit
   if(b.pits.[move].cell = 1 && b.pits.[move].id <= 5 && p = Player1) then
     b.pits.[6].cell  <- b.pits.[12-move].cell + b.pits.[6].cell + b.pits.[move].cell
     b.pits.[12-move].cell <- 0
     b.pits.[move].cell <- 0
 
-  elif(b.pits.[move].cell = 1 && b.pits.[move].id >= 7 && p =
-   Player2 && not(isHome b Player2 b.pits.[move])) then
+  elif(b.pits.[move].cell = 1 && b.pits.[move].id >= 7 && p = Player2 && not(isHome b Player2 b.pits.[move])) then
     b.pits.[13].cell <- b.pits.[12-move].cell + b.pits.[13].cell + b.pits.[move].cell
     b.pits.[12-move].cell <- 0
     b.pits.[move].cell <- 0
@@ -160,8 +159,8 @@ let getMove (b:board) (p:player) (q:string) : pit =
   // and 5 could have been (b.pits.Length/2)-1
   if (qInt >= 6) then qInt <- 5
   elif (qInt <= 0) then qInt <- 0
-  // +7 could also have been a variable (b.pits.Length/2)+1 This way the game 
-  // would scale well
+  // +7 could also have been a variable containg the value of "(b.pits.Length/2)+1" 
+  // This way the game would scale well. 
   if p = Player1 then b.pits.[qInt]
   else b.pits.[qInt+7]
 
@@ -194,6 +193,13 @@ let turn (b : board) (p : player) : board =
       repeat newB p (n + 1)
   repeat b p 0 
 
+
+/// <summary>This function will play</summary>
+/// <param name="b">is a board holdning pits</param>
+/// <param name="p">is a player </param>
+/// <remarks> Has not been tested with anything but standard board size, 
+/// but should work for almost any size if scale is wanted</remarks>
+/// <returns> A board</returns>
 let rec play (b : board) (p : player) : board =
   if isGameOver b then
     b
