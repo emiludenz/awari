@@ -1,0 +1,14 @@
+#!/bin/bash
+resize -s 22 37
+clear
+echo "Loading Awari!"
+
+echo -ne '                          (0%)\r'
+fsharpc --nologo -a awariLibComplete.fs
+
+echo -ne '##########                (50%)\r'
+fsharpc --nologo -r awariLibComplete.dll Awari.fsx
+
+echo -ne '####################      (100%!)\r'
+echo -ne '\n'
+mono Awari.exe
