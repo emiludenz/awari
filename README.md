@@ -5,6 +5,7 @@ Or run
 
 
   fsharpc --nologo -a awariLibComplete.fs && -r awariLibComplete.dll Awari.fsx
+  mono Awari.exe
 
 
 
