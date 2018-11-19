@@ -53,7 +53,7 @@ mutable, if, then, else, cloud, async, static, use, abstract, interface, inherit
 We have been given the task to implement the game Awari in F\#.
 Awari is an African boardgame that is played by 2 players with 7 sticks and 36 beans. The sticks are placed so that they create 14 pits, where 2 are homepits. The beans are distributed in all but the homepits, so that each pit contains 3 beans.\\
 A turn is played by picking up all the beans from one of the players pits and distributing them counterclockwise by placing one in each of the following pits including the home pits.\\
-If the last bean is placed in the players homepit the players gets another turn.\\
+If the last bean is placed in the players homepit the player gets another turn.\\
 If the last bean is placed in an empty pit that is not the the hompit, all the beans from the pit on the opposite site is catched and placed in the players homepit.\\
 The game is over when one of the players pits are empty.
 
@@ -94,15 +94,15 @@ distribute : b:board $\rightarrow$ p:player $\rightarrow$ i:pit $\rightarrow$ bo
 The distribute function serves to distribute beans counter clockwise from the chosen pit.
 It starts by setting the chosen pit to 0 (all the beans are picked up from this pit) and then distributes beans 1 at a time in the following pits corresponding to the amount of beans picked up.\\
 Example: if 3 beans are picked up from pit 3 on the board, it will increment pits 4,5,6 on the board by 1 and since the board is an int list, the function increments the pits by using list indexing.\\
-The capture is implemented by checking the last pit to have a bean placed in it has value 1 (0+1) AND if the bean placed is on the players side AND that it's the corresponding player. If so the players homepit is incremented by the values from the 2 opposing pits. It finds the opposing by calculating 12-pit.id. 
+The capture is implemented by checking the last pit to have a bean placed in it has value 1 (0+1) AND if the bean placed is on the players side AND that it's the corresponding player. If so the players homepit is incremented by the values from the 2 opposing pits. It finds the opposing pit by calculating 12-pit.id. 
 Example: player 1 lands in empty pit 2 and we capture the opposing side (12-2=10) and put all the beans in pit 6.\\
 
 getMove : b:board $\rightarrow$ p:player $\rightarrow$ q:string $\rightarrow$ pit\\
 When the player types his/her move into the console, the input is casted to type int. The function checks if its a valid input. Valid input are as follows\\
-Player1 : $0 \leq \text{ input } \leq 5$\\
-Player2 : $0 \leq \text{ input } \leq 5$\\
+Player1 : $1 \leq \text{ input } \leq 6$\\
+Player2 : $1 \leq \text{ input } \leq 6$\\
 In both cases if the input is outside of the interval, the value will be changed to the closest value within the interval.\\
-For Player2 the output is input+7. This is done to ease the gameplay. In short both players only have to remember that their pits are named 1-6 instead of them having different names.\\
+For Player2 the output is input converted to zero indexing +7. This is done to ease the gameplay. In short both players only have to remember that their pits are named 1-6 instead of them having different names.\\
 Example:\\
 If Player2 types in "7", 7 will be changed to 5 since there are only 6 pits (0-indexing) and then the input will be added to 7. So Player2 has chosen his 6th pit which is corresponding to the 12th element in the list.\\
 \\
@@ -138,9 +138,8 @@ We've tested correct inputs from both players, too large inputs from both player
 distribute:\\
 We've tested 1 ordinary move (without capturing) for each player, 1 move from each player with capturing and 1 move from each player where the last bean is placed in their homepit resulting in an extra turn.\\
 \\
-turn:\\
+turn and play takes user input and have not been tested like the rest of our functions.
 \\
-play:\\
 \lstset{xleftmargin=-50pt,xrightmargin=-50pt}
 \pagebreak
 \section*{Appendix}
